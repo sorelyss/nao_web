@@ -1,5 +1,4 @@
-var socket = io.connect('http://localhost:'+port, { 'forceNew': true });
-logger.info('SocketIO > listening on port2S ' + port);
+var socket = io.connect('https://emotive-nao-interface.herokuapp.com', { 'forceNew': true });
 socket.on('reset', function(){
   clearSlate();
   setTimeout(function(){

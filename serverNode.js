@@ -12,6 +12,8 @@ logger.remove(logger.transports.Console);
 logger.add(logger.transports.Console, { colorize: true, timestamp: true });
 logger.info('SocketIO > listening on port ' + port);
 
+logger.info('SocketIO > listening on IP ' + process.env.IP);
+
 io.on('connection', function (socket){
     var nb = 0;
 
