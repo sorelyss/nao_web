@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Dictation - Online Speech Recognition</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Amit Agarwal">
+  <meta name="description" content="Dictation is a free online speech recognition software that will help you write emails, documents and essays using your voice narration and without typing." />
+  <meta name="google-site-verification" content="fcnrbrpQfdBT0yQAtKojm8bTMd5hfIcnnTFJxyUXLV8" />
+  <link rel="alternate" type="application/rss+xml" title="Digital Inspiration" href="http://feeds.labnol.org/labnol" />
+  <link href='//fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+  
+
+	   <!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	
+	<link href="dictation.css" rel="stylesheet">
+	<style type="text/css">
+		h1 { color: #ffffff; font-family: 'Lato', sans-serif; font-size: 54px; font-weight: 200; line-height: 58px; margin: 0 0 58px; }
+
+		body {
+		    background-image: url("red_nao.png");
+		     background-repeat: no-repeat;
+		    background-attachment: fixed;
+		    background-size: 50%;
+		    background-position: 110% 0%; 
+		    background-color: #cccccc;
+		}
+	</style>
+</head>
+
+<body>
+	<br><br>
+<h1 style="text-align: center;">Interfaz NAO - Estímulo audiovisual</h1>
+
+
+<div class="row">
+
+  <div class="col-md-4">
+  	<div class="well" style="margin: 10%; margin-top: 15%; width: 90%; background-color: white;" align="center">
+		<div class="form-group" >
+			<label>Tiempo de cada dupla (segundos)</label>
+			<input type="number" id="dupla_t" value="10" min="6" class="form-control">
+		</div>
+		<div class="form-group" >
+			<label>Numero de duplas</label>
+			<input type="number" id="dupla_n" value="5" min="1" class="form-control">
+		</div>
+			<div class="form-group" >
+		  <label>Idioma a reconocer</label>
+		  <div class="platforms" id="platformslang">
+		    <span class="language" style="color: black">
+		      <select name="lang" id="lang" onchange="updateLang(this)" class="form-control">
+		        <option value="en-US">English US</option>
+		        <optgroup label="Español">
+		          <option value="es-AR">Argentina</option>
+		          <option value="es-BO">Bolivia</option>
+		          <option value="es-CL">Chile</option>
+		          <option value="es-CO" selected>Colombia</option>
+		          <option value="es-CR">Costa Rica</option>
+		          <option value="es-EC">Ecuador</option>
+		          <option value="es-SV">El Salvador</option>
+		          <option value="es-ES">España</option>
+		          <option value="es-US">Estados Unidos</option>
+		          <option value="es-GT">Guatemala</option>
+		          <option value="es-HN">Honduras</option>
+		          <option value="es-MX">México</option>
+		          <option value="es-NI">Nicaragua</option>
+		          <option value="es-PA">Panamá</option>
+		          <option value="es-PY">Paraguay</option>
+		          <option value="es-PE">Perú</option>
+		          <option value="es-PR">Puerto Rico</option>
+		          <option value="es-DO">República Dominicana</option>
+		          <option value="es-UY">Uruguay</option>
+		          <option value="es-VE">Venezuela</option>
+		        </optgroup>
+		 
+		      </select>
+		    </span>
+		  </div>
+	  	</div>
+		<button id="main_button" onclick="javascript:start_all();return false;"; class="btn">Empezar</button>
+	</div>
+  </div>
+
+  <div class="col-md-5">
+  	<div class="well" style="width: 90%; background-color: white; text-align: center;">
+  	<label>Nombre del estímulo audiovisual</label>
+  	<select name="video_name" id="video_name" onchange="javascript:updateVideo()" class="form-control">
+  		<option value="happy" selected>Historia neutral</option>
+  		<option value="sad">Historia triste</option>
+    </select>
+  	<video id="video" width="300" height="300" controls>
+	  <source src="videos/happy.mp4" type="video/mp4">
+	</video>
+  </div>
+</div>
+  
+</div>
+
+<div class="notepad" style="display: none;">
+    <div class="notepad-heading">
+      <h1>Reconocimiento de Voz</h1>
+    </div>
+    <div id="speech">
+      <span id="labnol" contenteditable="true"></span>
+      <span id="notfinal"></span>
+      <span id="warning"></span>
+    </div>
+    <div class="whatisthis">
+      <span id="messages">
+        <a href="#" onclick="javascript:action();return false;" id="btn">Loading..</a>
+        <a href="#" onclick="javascript:clearSlate();return false;" id="btnClear">Clear</a>
+        <img id="status" src="listen.gif" />
+      </span>
+    </div>
+</div>
+
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+  <script src="libs/socket.io.js"></script>
+  <script src="audio.js"></script>
+  <script src="dictation.js"></script>
+  <script>
+    (function(i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function() {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+    ga('create', 'UA-50062-33', 'dictation.io');
+    ga('send', 'pageview');
+</script>
+
+  <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=labnol"></script>
+
+  <script>
+  	function updateVideo() {
+  		$('#video')[0].src = "videos/" + $('#video_name')[0].value + ".mp4"
+  	}
+ 
+  $("#labnol").change(function(){
+    console.log()
+  })
+</script>
+
+
+
+</body>
+
+</html>
