@@ -1,10 +1,11 @@
+#!/usr/bin/env node
 var jsonfile = require('jsonfile')
 var express = require('express');
 var app = express();
 var server     = require('http').createServer(app),
     io         = require('socket.io')(server),
     logger     = require('winston'),
-    port       = process.env.PORT || 3000;;
+    port       = process.env.PORT || 3000;
 
 // Logger config
 logger.remove(logger.transports.Console);

@@ -1,4 +1,5 @@
 var socket = io.connect('http://localhost:'+port, { 'forceNew': true });
+logger.info('SocketIO > listening on port2S ' + port);
 socket.on('reset', function(){
   clearSlate();
   setTimeout(function(){
