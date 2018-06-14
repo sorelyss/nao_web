@@ -6,6 +6,7 @@ var server     = require('http').createServer(app),
     io         = require('socket.io')(server),
     logger     = require('winston'),
     port       = process.env.PORT || 3000;
+var path = require('path');
 
 // Logger config
 logger.remove(logger.transports.Console);
@@ -53,10 +54,11 @@ app.post('/ReceiveJSON', function(request, response){
   response.send("ok");
 });
 
-app.get('/',function(request, response){
-  response.send('hello express');
-  console.log('llegó');
-});
+// app.get('/',function(request, response){
+//   response.sendFile(__dirname+"/index.html");
+// });
+
+app.use(express.static(__dirname));
 
 // app.listen(1337, function(){
 //   console.log('Server Express Ready!');
