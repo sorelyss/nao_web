@@ -1,4 +1,4 @@
-var socket = io.connect('http://localhost:1337', { 'forceNew': true });
+var socket = io.connect('http://localhost:'+port, { 'forceNew': true });
 socket.on('reset', function(){
   clearSlate();
   setTimeout(function(){

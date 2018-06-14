@@ -4,7 +4,7 @@ var app = express();
 var server     = require('http').createServer(app),
     io         = require('socket.io')(server),
     logger     = require('winston'),
-    port       = 1337;
+    port       = process.env.PORT || 3000;;
 
 // Logger config
 logger.remove(logger.transports.Console);
